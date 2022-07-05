@@ -7,7 +7,7 @@
 @section('content')
     <h1>Тут Вы можете написать любой пост на любую тему</h1>
 
-    <form action="{{ route('post-form') }}" method="post">
+    <form action="{{ route('post-form') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Введите имя автора</label>
@@ -22,6 +22,10 @@
         <div class="form-group">
             <label for="message">Введите Ваше сообщение</label>
             <textarea name="message" id="message" class="form-control" placeholder="Введите Ваш текст"></textarea>
+        </div>
+
+        <div class="form-group" >
+            <input class="form-control" name="image" type="file" id="image">
         </div>
 
         <button type="submit" class="btn btn-success">Отправить</button>

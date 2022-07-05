@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $name
  * @property mixed $subject
  * @property mixed $message
+ * @property Post|mixed $image
  */
 class Post extends Model
 {
@@ -17,6 +18,6 @@ class Post extends Model
 
 //    public $timestamps = false;
 
-    protected $fillable = ['name', 'subject', 'message'];
+    protected $fillable = ['name', 'subject', 'message', 'image'];
 
 }

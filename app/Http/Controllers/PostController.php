@@ -38,11 +38,18 @@ class PostController extends Controller
     public function submit(PostRequest $req): RedirectResponse
     {
 
+
+        $name = $req->input('name');
+        $subject = $req->input('subject');
+        $message = $req->input('message');
+        $path= $req->file('image')->store('uploads', 'public');
+
         $post = new Post();
 
-        $post->name = $req->input('name');
-        $post->subject = $req->input('subject');
-        $post->message = $req->input('message');
+        $post->name = $name;
+        $post->subject = $subject;
+        $post->message = $message;
+        $post->image = $path;
 
         $post->save();
 

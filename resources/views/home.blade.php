@@ -11,6 +11,7 @@
             <th>Автор</th>
             <th>Тема статьи</th>
             <th>Статья</th>
+            <th>Аватар</th>
         </tr>
 
         @foreach($posts as $item)
@@ -18,6 +19,7 @@
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->subject }}</td>
                 <td>{{ $item->message }}</td>
+               <td><img src="{{ asset('/storage/' . $item->image) }}"></td>
         @endforeach
     </table>
 

@@ -12,6 +12,8 @@
             <th>Тема статьи</th>
             <th>Статья</th>
             <th>Аватар</th>
+            <th>Комментарий</th>
+
         </tr>
 
         @foreach($posts as $item)
@@ -19,7 +21,8 @@
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->subject }}</td>
                 <td>{{ $item->message }}</td>
-               <td><img src="{{ asset('/storage/' . $item->image) }}"></td>
+                <td><img src="{{ asset('/storage/' . $item->image) }}"></td>
+                <td><a class="me-3 py-2 text-blue text-decoration-none" href= "{{ route('one-post', $item->id) }}">Детальнее</a></td>
         @endforeach
     </table>
 

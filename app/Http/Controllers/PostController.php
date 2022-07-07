@@ -42,7 +42,7 @@ class PostController extends Controller
         $name = $req->input('name');
         $subject = $req->input('subject');
         $message = $req->input('message');
-        $path= $req->file('image')->store('uploads', 'public');
+        $path = $req->file('image')->store('uploads', 'public');
 
         $post = new Post();
 
@@ -53,7 +53,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('post')->with('success', 'Ваш пост отправлен и будет рассмотрен модератором');
+        return redirect()->route('post')->with('success', 'Ваш пост отправлен и опубликован');
 
     }
 
@@ -77,5 +77,12 @@ class PostController extends Controller
     {
         $post = DB::table('posts')->orderBy('created_at', 'desc')->limit(3)->get();
         return view('two-hour', ['posts' => $post]);
+    }
+
+    public function viewOne($id)
+    {
+        $post = Post::query()->find($id);
+
+        return view('one-post', compact('post'));
     }
 }

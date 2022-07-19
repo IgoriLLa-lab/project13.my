@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Elasticsearch;
 
 class PostController extends Controller
 {
@@ -62,8 +62,27 @@ class PostController extends Controller
      */
     public function allPost()
     {
-        $post = DB::table('posts')->get();
-        return view('home', ['posts' => $post]);
+        $posts = Post::all();
+
+        foreach ($posts as $post) {
+            try {
+                Elasticsearch::index([
+                    'id' => $post->id,
+                    'index' => 'posts',
+                    'body' => [
+                        'name' => $post->name,
+                        'subject' => $post->subject,
+                        'message' => $post->message,
+                    ]
+                ]);
+
+            } catch (Exception $e) {
+                $e->getMessage();
+            }
+        }
+
+
+        return view('home', ['posts' => $posts]);
 
     }
 

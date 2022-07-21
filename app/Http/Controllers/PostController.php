@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MailEvent;
+use App\Mail\PostSender;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -38,7 +41,6 @@ class PostController extends Controller
     public function submit(PostRequest $req): RedirectResponse
     {
 
-
         $name = $req->input('name');
         $subject = $req->input('subject');
         $message = $req->input('message');
@@ -52,6 +54,10 @@ class PostController extends Controller
         $post->image = $path;
 
         $post->save();
+
+        $mail = Mail::to("crocusikigor@yandex.ru")->send(new PostSender($post));
+
+        event(new MailEvent($mail));
 
         return redirect()->route('post')->with('success', 'Ваш пост отправлен и опубликован');
 

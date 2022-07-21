@@ -1,7 +1,7 @@
 @extends('layouts.general')
 
 @section('title-general')
-    Контакты
+    Посты
 @endsection
 
 @section('content')
